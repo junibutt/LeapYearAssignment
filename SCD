@@ -1,0 +1,153 @@
+#include<iostream>
+using namespace  std;
+bool isleap;
+int dayIndex=1;
+const int col =7;
+
+bool findLeapYear(int year)
+{
+    bool isleap=false;
+    if((year % 4)==0)
+    {
+        if((year%100==0))
+        {
+            if((year%400==0))
+            {
+                isleap=true;
+            }
+            else
+            {
+                isleap=false;
+            }
+        }
+        else
+        {
+            isleap=true;
+        }
+    }
+    else{
+        isleap=false;
+    }
+    return isleap;
+}
+void showDays(int days)
+{
+    int day=1;
+    while(day<=days)
+    {
+    for(int i=1;i<=7;i++)
+    {
+        if(day>days)
+        {
+            break;
+        }
+        if(i==dayIndex)
+        {   
+            if((day==29)&&(day==days))
+            {
+                cout<<("\033[3;44;30m29\033[0m\t");
+                 }
+            else if(day<10){
+                cout<<"0"<<day<< "  ";
+            }
+            else
+            {
+                cout<< day<< "  ";
+            }
+            day++;
+            if(dayIndex==7)
+            {
+                dayIndex=1;
+            }else{
+                dayIndex=dayIndex+1;
+            }
+        }
+        else{
+            cout<<"    ";
+        }
+    }
+    cout<<endl;
+    }
+
+}
+
+void calculateDays(int month)
+{
+    int days;
+    if(month<=6&&month>0)
+    {
+        if((month%2)==0)
+        {
+            if(month!=2)
+            {
+                days=30;
+            }else{
+                if(isleap==true)
+                {
+                    days=29;
+                }else{
+                    days=28;
+                }
+            }  
+        }
+        else
+        {
+            days=31;
+        }
+        showDays(days);
+    }else{
+        if((month%2)==0)
+        {
+            days=31;           
+        }
+        else
+        {
+            days=30;
+        }
+        showDays(days); 
+    }
+}
+
+void printLeapYear()
+{
+    for(int i=2000;i<=2400 ;i++)
+    {
+        isleap=findLeapYear(i);
+        for(int j=0;j<12;j++)
+        {
+            cout<<"Month:  "<<j+1<<",   Year:   "<<i<<endl;
+            cout<<"Su"<<"  Mo"<<"  Tu"<<"  We"<<"  Th"<<"  Fr"<<"  Sa"<<endl;
+            calculateDays(j+1);
+            cout<<endl<<endl;
+        }
+    }
+}
+
+
+int main()
+{
+    int year,choice;
+    printLeapYear();
+    while(true)
+    {
+        cout<<"Enter Year to find leap or not";
+        cin>> year;
+        isleap=findLeapYear(year);
+        if(isleap==true)
+        {
+            cout<<year<< "   is leap year.";
+        }
+        else
+        {
+            cout<<year<< "   not a leap year.";
+        }
+        cout<<endl;
+        cout<<"Enter 0 to exit ";
+        cout<<"Enter 01 to find another leap year ";
+        cin>> choice;
+        if(choice==0)
+        {
+            break;
+        }
+    }
+}
